@@ -1,0 +1,19 @@
+\chapter{Related work}
+\label{cha:1}
+Most of the World Wide Web users had experience with Wikipedia for enhancing their knowledge, due to the easily accessible free information. However, it's too much unstructured to let software use it in a straight forward manner. For this reason, projects like Wikidata had been created. Wikidata acts as central storage for the structured data of its Wikimedia sister projects including Wikipedia, Wikivoyage, Wikisource, and others.\footnote{\url{https://www.wikidata.org/wiki/Wikidata:Main_Page}}
+Their strong usage is related to the high quality data provided. Therefore, the content needs to be sustained by linking the authoritative sources, leading to create a set of different point of view(read \textit{claims}). Nevertheless, currently less than \textbf{a quarter} of the knowledge base(KB) statements has a reference to \textbf{non-wiki} sources and roughly an \textbf{half} of them is totally \textbf{unreferenced}.\footnote{\url{https://docs.google.com/presentation/d/1XX-yzT98fglAfFkHoixOI1XC1uwrS6f0u1xjdZT9TYI/edit?usp=sharing}, slides 15 to 19} Aligning Wikidata to structured authoritative databases can mine a lot of references, even if it's a demanding task. In fact, the labels can be the same among Wikidata and the chosen database, but could be an homonym. To overcome the issue it's mandatory to exploit other attributes in addition to labels. Choosing this extra attributes is an issue itself since Wikidata and the target database have probably different attributes sets. It's not even assumable the attributes will be the same among all the entities in the same KB, like Wikidata. SocialLink, a system that aligns knowledge base entries of people and organisations to the  corresponding social media profiles\cite{DBLP:conf/sac/NechaevCG17}, shares the same difficulties. SocialLink team addressed them by choosing a minimal subset of attributes: name, difference between person and organization and temporal information that tells if the entity is alive/existent. Similarly we chose full name, birth and death dates, and a set of URLs related to the entity. Though, we let the chance of adding target specific attributes, unlike SocialLink.
+
+The alignment task deals with a lot of queries on those attributes, so working with the targets APIs could be an issue: APIs usage is restricted and also web requests bring latency in code execution. Like SocialLink\cite{DBLP:conf/sac/NechaevCG17}, we work with a custom indexed databases, but we've been able to populate it through the target dumps.
+
+In the same way of SocialLink\cite{DBLP:conf/sac/NechaevCG17} we have an open world assumption, meaning that the match between Wikidata and the target database can not exist.
+
+Unlike SocialLink we are currently focused in a more rule based approach instead of a deep learning one.
+
+\section{Type Prediction Combining LOD and Social Media}
+\label{cha:12}
+Could be part of soweego
+
+\section{Strephit}
+\label{cha:13}
+Paper ancora da leggere
+

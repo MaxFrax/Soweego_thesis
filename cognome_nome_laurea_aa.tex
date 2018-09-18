@@ -1,0 +1,184 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Template per Elaborato di Laurea
+% DISI - Dipartimento di Ingegneria e Scienza dell’Informazione
+%
+% update 2015-09-10
+%
+% Per la generazione corretta del 
+% pdflatex nome_file.tex
+% bibtex nome_file.aux
+% pdflatex nome_file.tex
+% pdflatex nome_file.tex
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% formato FRONTE RETRO
+\documentclass[epsfig,a4paper,11pt,titlepage,twoside,openany]{book}
+\usepackage{epsfig}
+\usepackage{plain}
+\usepackage{setspace}
+\usepackage[paperheight=29.7cm,paperwidth=21cm,outer=1.5cm,inner=2.5cm,top=2cm,bottom=2cm]{geometry} % per definizione layout
+\usepackage{titlesec} % per formato custom dei titoli dei capitoli
+
+% Pacchetti aggiunti
+\usepackage[hyphens]{url}
+\usepackage[breaklinks, colorlinks=true, citecolor=red, linkcolor=black, urlcolor=black]{hyperref}
+\usepackage{listings}
+\usepackage{todonotes}
+
+%%%%%%%%%%%%%%
+% supporto lettere accentate
+%
+%\usepackage[latin1]{inputenc} % per Windows;
+\usepackage[utf8x]{inputenc} % per Linux (richiede il pacchetto unicode);
+%\usepackage[applemac]{inputenc} % per Mac.
+
+\singlespacing
+
+\usepackage[english]{babel}
+
+\begin{document}
+
+  % nessuna numerazione
+  \pagenumbering{gobble} 
+  \input{pagina_iniziale}
+
+  \clearpage
+ 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Nota
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Sezione Ringraziamenti opzionale
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \input{ringraziamenti}
+  \clearpage
+  \pagestyle{plain} % nessuna intestazione e pie pagina con numero al centro
+
+  
+  % inizio numerazione pagine in numeri arabi
+  \mainmatter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Nota
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Si ricorda che il numero massimo di facciate e' 30.
+%% Nel conteggio delle facciate sono incluse 
+%%   indice
+%%   sommario
+%%   capitoli
+%% Dal conteggio delle facciate sono escluse
+%%   frontespizio
+%%   ringraziamenti
+%%   allegati    
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    % indice
+    \tableofcontents
+    \clearpage
+    
+    
+          
+    % gruppo per definizone di successione capitoli senza interruzione di pagina
+    \begingroup
+      % nessuna interruzione di pagina tra capitoli
+      % ridefinizione dei comandi di clear page
+      \renewcommand{\cleardoublepage}{} 
+      \renewcommand{\clearpage}{} 
+      % redefinizione del formato del titolo del capitolo
+      % da formato
+      %   Capitolo X
+      %   Titolo capitolo
+      % a formato
+      %   X   Titolo capitolo
+      
+      \titleformat{\chapter}
+        {\normalfont\Huge\bfseries}{\thechapter}{1em}{}
+        
+      \titlespacing*{\chapter}{0pt}{0.59in}{0.02in}
+      \titlespacing*{\section}{0pt}{0.20in}{0.02in}
+      \titlespacing*{\subsection}{0pt}{0.10in}{0.02in}
+      
+      % sommario
+      \input{abstract}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Nota
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Sommario e' un breve riassunto del lavoro svolto dove si descrive 
+%% l’obiettivo, l’oggetto della tesi, le metodologie e 
+%% le tecniche usate, i dati elaborati e la spiegazione delle conclusioni 
+%% alle quali siete arrivati.
+%% Il sommario dell’elaborato consiste al massimo di 3 pagine e deve contenere le seguenti informazioni: 
+%%   contesto e motivazioni
+%%   breve riassunto del problema affrontato
+%%   tecniche utilizzate e/o sviluppate
+%%   risultati raggiunti, sottolineando il contributo personale del laureando/a
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%      
+      
+      %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+      % lista dei capitoli
+      %
+      % \input oppure \include
+      %
+      \input{0_introduction.tex}
+      \input{1_relatedwork.tex}
+      \input{2_preliminar.tex}
+      \input{3_architecture.tex}
+      \input{4_results.tex}
+      \input{5_conclusions.tex}
+      \input{6_futurework.tex}
+      %\input{capitolo4}
+      
+      
+    \endgroup
+
+
+    % bibliografia in formato bibtex
+    %
+    % aggiunta del capitolo nell'indice
+    \addcontentsline{toc}{chapter}{Bibliografia}
+    % stile con ordinamento alfabetico in funzione degli autori
+    \bibliographystyle{plain}
+    \bibliography{biblio}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Nota
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Nella bibliografia devono essere riportati tutte le fonti consultate 
+%% per lo svolgimento della tesi. La bibliografia deve essere redatta 
+%% in ordine alfabetico sul cognome del primo autore. 
+%% 
+%% La forma della citazione bibliografica va inserita secondo la fonte utilizzata:
+%% 
+%% LIBRI
+%% Cognome e iniziale del nome autore/autori, la data di edizione, titolo, casa editrice, eventuale numero dell’edizione. 
+%% 
+%% ARTICOLI DI RIVISTA
+%% Cognome e iniziale del nome autore/autori, titolo articolo, titolo rivista, volume, numero, numero di pagine.
+%% 
+%% ARTICOLI DI CONFERENZA
+%% Cognome e iniziale del nome autore/autori (anno), titolo articolo, titolo conferenza, luogo della conferenza (città e paese), date della conferenza, numero di pagine. 
+%% 
+%% SITOGRAFIA
+%% La sitografia contiene un elenco di indirizzi Web consultati e disposti in ordine alfabetico. 
+%% E’ necessario:
+%%   Copiare la URL (l’indirizzo web) specifica della pagina consultata
+%%   Se disponibile, indicare il cognome e nome dell’autore, il titolo ed eventuale sottotitolo del testo
+%%   Se disponibile, inserire la data di ultima consultazione della risorsa (gg/mm/aaaa).    
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    
+
+    \titleformat{\chapter}
+        {\normalfont\Huge\bfseries}{Allegato \thechapter}{1em}{}
+    % sezione Allegati - opzionale
+    \appendix
+    \input{allegati}
+
+\end{document}

@@ -1,0 +1,72 @@
+\chapter{Preliminary analysis}
+\label{cha:2}
+The very first task of this project is to select the target databases.\footnote{\url{https://meta.wikimedia.org/wiki/Grants:Project/Hjfocs/soweego\#Work_package}} We see two directions here: either we focus on a few big and well known targets as per the project proposal, or we can try to find a technique to link a lot of small ones from the long tail, as suggested by \texttt{ChristianKl}\footnote{\url{https://meta.wikimedia.org/wiki/Grants_talk:Project/Hjfocs/soweego\#Target_databases_scalability}}.
+
+We used \textbf{SQID}\footnote{\url{https://tools.wmflabs.org/sqid/\#/browse?type=properties}} as a starting point to get a list of people databases that are already used in Wikidata, sorted in descending order of usage.\footnote{\texttt{Select datatype} set to \texttt{ExternalId}, \texttt{Used for class} set to \texttt{human Q5}} This is useful to split the candidates into \textit{big} and \textit{small} fishes, namely the head and the (long) tail of the result list respectively. Let's start with the small fishes.
+
+Quoting \texttt{ChristianKl}, it would be ideal to create a configurable tool that enables users to add links to \textit{new databases in a reasonable time-frame} (which practically means writing small to none amount of code). Consequently, we carried out the following investigation: we considered as small fishes all the entries in \textbf{SQID} with an external ID data type, used for class  human (Q5)\footnote{\url{https://www.wikidata.org/wiki/Q5}}, and with \textbf{less than 15 uses in statements}. We detail below a set of critical issues about this direction, as well as their eventual solutions.
+
+The analysis of a small fish can be broken down into a set of steps. This is also useful to translate the process into software and to make each step flexible enough for dealing with the heterogeneity of the long tail targets. The steps have been implemented into a piece of software by \texttt{MaxFrax96}.\footnote{\url{https://github.com/MaxFrax/Evaluation}}
+
+\section{Retrieving the dump}
+\label{cha:21}
+This sounds pretty self-evident: if we aim at linking two databases, then we need access to all their entities. Since we focus on people, it is therefore necessary to download the appropriate dump for each small fish we consider.
+
+\subsection{Problem}
+\label{cha:211}
+In the real world, such a trivial step raises a first critical issue: not all the database websites give us the chance to download the dump.
+
+\subsection{Solutions}
+\label{cha:212}
+\begin{itemize}
+  \item Cheap, but not scalable: to contact the database administrator and discuss dump releases for Wikidata;
+  \item expensive, but possibly scalable: to autonomously build the dump. If a valid URI exists for each entity, we can re-create the dump. However, this is not trivial to generalize: sometimes it is impossible to retrieve the list of entities, sometimes the URIs are merely HTML pages that require Web scraping. See the following examples:
+  \begin{itemize}
+      \item \texttt{Welsh Rugby Union men's player ID (P3826)}\footnote{\url{https://www.wikidata.org/wiki/Property:P3826}} needs scraping for both the list of entities and each entity;
+      \item \texttt{Berlinische Galerie artist ID (P4580)}\footnote{\url{https://www.wikidata.org/wiki/Property:P4580}} needs scraping for both the list of entities and each entity;
+      \item \texttt{FAI ID (P4556)}\footnote{\url{https://www.wikidata.org/wiki/Property:P4556}} needs scraping for both the list of entities and each entity;
+      \item \texttt{Debrett's People of Today ID (P2255)}\footnote{\url{https://www.wikidata.org/wiki/Property:P2255}} does not seems to expose any list of people;
+      \item \texttt{AGORHA event identifier (P2345)}\footnote{\url{https://www.wikidata.org/wiki/Property:P2345}} does not seem to expose any list of people.
+  \end{itemize}
+\end{itemize}
+
+\section{Handling the format}
+\label{cha:22}
+The long tail is roughly broken down as follows:
+\begin{itemize}
+    \item XML;
+    \item JSON;
+    \item RDF;
+    \item HTML pages with styling and whatever a Web page can contain.
+\end{itemize}
+
+\subsection{Problem}
+\label{cha:221}
+Formats are heterogeneous. We focus on open data and RDF, as dealing with custom APIs is out of scope for this investigation. We also hope that the open data trend of recent years would help us. However, a manual scan of the small fishes yielded poor results. There were 56 targets in our long tail, out of \textbf{16} randomly picked candidates, only \texttt{YCBA agent ID}\footnote{\url{https://www.wikidata.org/wiki/Property:P4169}} was in RDF, and has thousands of uses in statements at the time of writing this report.
+\subsection{Solution}
+\label{cha:222}
+To define a way (by scripting for instance) to translate each input format into a standard project-wide one. This could be achieved during the next step, namely ontology mapping between a given small fish and Wikidata.
+
+\section{Handling the format}
+\label{cha:23}
+Linking Wikidata items to target entities requires a mapping between both meta-data/schemas.
+
+\subsection{Solution}
+\label{cha:231}
+The mapping can be manually defined by the community: a piece of software will then apply it. To implement this step, we also need the common data format described above.
+
+\subsection{Side note: available entity meta-data}
+\label{cha:232}
+Small fishes may contain entity meta-data which are likely to be useful for automatic matching. The entity linking process may dramatically improve if the system is able to mine extra property mappings. This is obvious when meta-data are in different languages, but in general we cannot be sure that two different databases hold the same set of properties, if they have some in common.
+
+\section{Conclusion}
+\label{cha:24}
+It is out of scope for the project to perform entity linking over the whole set of small fishes. On the other hand, it may make sense to build a system that lets the community plug in new small fishes with relative ease. Nevertheless, this would require a reshape of the original proposal, which comes with its own risks:
+\begin{itemize}
+\item it is probably not a safe investment of resources;
+\item eventual results would not be in the short term, as they would require a lot of work to create a flexible system for everybody's needs;
+\item it is likely that the team is not facing eventual extra problems in this phase.
+\end{itemize}
+
+Most importantly, a system to plug new small fishes \textbf{already exists}. \textbf{Mix'n'match}\footnote{\url{https://tools.wmflabs.org/mix-n-match/}} is specifically designed for the task.\footnote{\url{http://magnusmanske.de/wordpress/?p=471}}. Instead of reinventing the wheel, we joined efforts with our advisor \texttt{Magnus Manske}\footnote{\url{https://meta.wikimedia.org/wiki/User:Magnus_Manske}} in his work on big fishes\footnote{\url{http://magnusmanske.de/wordpress/?p=478}}
+
