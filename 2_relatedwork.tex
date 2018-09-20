@@ -1,0 +1,12 @@
+\chapter{Related work}
+\label{cha:2}
+The alignment of Wikidata to structured authoritative databases can yield a lot of references, even if it is a demanding task. In fact, the labels can be the same among Wikidata and the chosen database, but there could be homonyms. To overcome the issue we need to exploit other attributes in addition to labels. Choosing these extra attributes is an issue itself since Wikidata and the target database have probably different attribute sets. It is not even assumable that the attributes will be the same among all the entities in the same KB, like Wikidata. 
+
+\texttt{SocialLink}, a system that aligns knowledge base entries of people and organizations to the  corresponding social media profiles\cite{DBLP:conf/semweb/NechaevCG17a}, shares the same challenges. \texttt{SocialLink} addressed them by picking a minimal subset of attributes: name, difference between person and organization and temporal information that tells if the entity is alive/existent. Similarly, we chose full name, birth and death dates, and a set of URLs related to the entity. Though, we let the chance of adding target specific attributes, unlike \texttt{SocialLink}.
+
+The exceeding attributes can improve the linking process, but they can also be exploited in a KB population task. In fact, mapping the semantics of these attributes against the Wikidata ontology would result in the addition of referenced statements. These statements cannot replace the work done by \texttt{StrepHit}\cite{DBLP:journals/semweb/FossatiDG18} or the one described in \cite{self:SocialLink/TypePrediction}, but is still a contribution. Unlike us, they work on unstructured data, such as full text or social media content.
+
+An existing \texttt{SocialLink} improvement \cite{self:SocialLink/Embeddings} exploits an enhanced representation of the social graph, compared to \cite{DBLP:conf/sac/NechaevCG17}. Despite the improvement, \cite{self:SocialLink/Embeddings} will not be helpful in soweego, since we cannot assume the availability of any social graph data.
+
+The alignment task deals with a lot of queries on those attributes, so working with the targets APIs could be an issue: APIs usage is restricted and also web requests bring latency in code execution. Like SocialLink\cite{DBLP:conf/sac/NechaevCG17}, we work with a custom indexed database, but we have been able to populate it through the target dumps.
+
