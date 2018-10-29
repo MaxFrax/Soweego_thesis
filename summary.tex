@@ -1,0 +1,36 @@
+\clearpage
+\newpage
+\mbox{~}
+\clearpage
+\newpage
+
+\chapter*{Summary} % senza numerazione
+\label{abstract}
+Wikipedia and \textbf{Wikidata} are open source collaborative projects with the goal of collecting and sharing general knowledge. While the former is intended for humans, the latter caters for \textbf{machine-readable data}. Both are not meant to contain \textit{original research}.\footnote{\url{https://en.wikipedia.org/wiki/Wikipedia:No_original_research}}\footnote{\url{https://www.wikidata.org/wiki/Wikidata:What_Wikidata_is_not}} Original research means that no reliable or published material exists referring to reported facts, allegations or ideas.
+Such design decision entails that Wikipedia and Wikidata content should be supported by references to external sources.
+Nevertheless, \texttt{Wikidata} suffers from a \textbf{lack of references}.
+The \textbf{soweego} project aims at mitigating the issue by \textbf{linking} \texttt{Wikidata} to a set of trustworthy target \textbf{catalogs}, a task that can be cast as a record linkage problem.
+As a result, \textbf{references and new content} may be mined from these catalogs after the linking.
+
+\textbf{Record linkage}\footnote{\url{https://en.wikipedia.org/wiki/Record_linkage\#Probabilistic_record_linkage}} must cope with several challenges: inaccurate data, heterogeneous data precision, and ambiguity, just to name the key ones.
+% Homonyms are the very first issue to deal with, as much as people's second names notation (extended, short, missing).
+These challenges can be addressed by comparing other data attributes, such as dates and locations. However, there is no guarantee that \texttt{Wikidata} and the target will share any attribute. \texttt{soweego} addresses the issue by working on a common set of attributes, but for the sake of generalization it supports target-specific ones.
+
+This thesis details a set of deterministic techniques for record linkage: \textit{perfect full name match}; \textit{perfect name with birth and death dates match}; \textit{perfect cross-catalog link match}; \textit{tokenized cross catalog link match}; \textit{normalized full names match}.
+Specifically, we designed them to work on the common set of attributes, and we evaluate the results obtained picking the \texttt{MusicBrainz} as target database.
+We observe that \textit{URLs to external sources} and \textit{dates} attributes provide a relatively high precision.
+Hence, the output produced by these techniques has been added to \texttt{Wikidata}.
+
+Our work on the aforementioned techniques represents the fundamental building blocks and knowledge to scale up from deterministic algorithms to probabilistic ones.
+We summarize our contributions to the \texttt{soweego} project as follows.
+\begin{itemize}
+    \item Analysis of the long tail of candidate target catalogs;
+    \item development of the facility to import the \texttt{MusicBrainz} dump in the system;
+    \item implementation of the baseline techniques for \texttt{MusicBrainz};
+    \item performance evaluation;
+    \item software packaging in a portable environment;
+    \item intervention to all technical discussions.
+\end{itemize}
+
+\pagebreak
+

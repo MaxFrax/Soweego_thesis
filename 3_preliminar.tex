@@ -1,17 +1,23 @@
+\clearpage
+\newpage
+\mbox{~}
+\clearpage
+\newpage
+
 \chapter{Preliminary analysis}
 \label{cha:3}
-The very first task of this project is to select the target databases.\footnote{\url{https://meta.wikimedia.org/wiki/Grants:Project/Hjfocs/soweego\#Work_package}} We see two directions here: either we focus on a few big and well known targets as per the project proposal, or we can try to find a technique to link a lot of small ones from the long tail, as suggested by \texttt{ChristianKl}\footnote{\url{https://meta.wikimedia.org/wiki/Grants_talk:Project/Hjfocs/soweego\#Target_databases_scalability}}.
+The very first task of this project is to select the target databases.\footnote{\url{https://meta.wikimedia.org/wiki/Grants:Project/Hjfocs/soweego\#Work_package}} We see two directions here: either we focus on a few big and well known targets as per the project proposal, or we can try to find a technique to link a lot of small ones from the long tail, as suggested by \texttt{ChristianKl}.\footnote{\url{https://meta.wikimedia.org/wiki/Grants_talk:Project/Hjfocs/soweego\#Target_databases_scalability}}
 
-We used \textbf{SQID}\footnote{\url{https://tools.wmflabs.org/sqid/\#/browse?type=properties}} as a starting point to get a list of people databases that are already used in Wikidata, sorted in descending order of usage.\footnote{\textit{Select datatype} set to \textit{ExternalId}, \textit{Used for class} set to \textit{human Q5}} This is useful to split the candidates into \textit{big} and \textit{small} fishes, namely the head and the (long) tail of the result list respectively.
+We used \texttt{SQID}\footnote{\url{https://tools.wmflabs.org/sqid/\#/browse?type=properties}} as a starting point to get a list of people databases that are already used in Wikidata, sorted in descending order of usage.\footnote{\textit{Select datatype} set to \textit{ExternalId}, \textit{Used for class} set to \textit{human Q5}} This is useful to split the candidates into \textit{big} and \textit{small} fishes, namely the head and the (long) tail of the result list respectively.
 
-Quoting \texttt{ChristianKl}, it would be ideal to create a configurable tool that enables users to add links to \textit{new databases in a reasonable time-frame} (standing for no code writing). Consequently, we carried out the following investigation: we considered as small fishes all the entries in \textbf{SQID} with an external ID data type, used for class  human (Q5)\footnote{\url{https://www.wikidata.org/wiki/Q5}}, and with \textbf{less than 15 uses in statements}. It results that some critical issues need to be solved to follow this direction, as described in the following lines.
+Quoting \texttt{ChristianKl}, it would be ideal to create a configurable tool that enables users to add links to \textit{new databases in a reasonable time-frame} (standing for \textit{no code writing}). Consequently, we carried out the following investigation: we considered as small fishes all the entries in \texttt{SQID} with an \texttt{external ID} data type, used for class \texttt{human} (\texttt{Q5})\footnote{\url{https://www.wikidata.org/wiki/Q5}}, and with less than 15 uses in statements. It results that some critical issues need to be solved to follow this direction, as described below.
 
-The analysis of a small fish can be broken down into a set of steps. This is also useful to translate the process into software and to make each step flexible enough for dealing with the heterogeneity of the long tail targets. The steps have been implemented into a piece of software by \texttt{MaxFrax96}.\footnote{\url{https://github.com/MaxFrax/Evaluation}}
+The analysis of a small fish can be broken down into a set of steps. This is also useful to translate the process into software and to make each step flexible enough for dealing with the heterogeneity of the long tail. The steps have been implemented into a piece of software by the author of this thesis.\footnote{\url{https://github.com/MaxFrax/Evaluation}}
 
 \section{Retrieving the dump}
 \label{cha:31}
-The naive technique to link two database is, for each entity in the first one, doing a look up into the second one. Since databases contain a lot of data, we need the dumps to avoid APIs restrictions and slow computation due to connection latency.
-Moreover we focus on people, it is therefore necessary to obtain the appropriate dump for each small fish we consider.
+The naïve technique to link two databases can be resumed as follows: for each entity in the former, look it up into the latter. Since databases contain a lot of data, we need the dumps to avoid APIs restrictions and slow computation due to connection latency.
+As we focus on people, it is also necessary to obtain the appropriate dump for each small fish we consider.
 
 \subsection{Problem}
 \label{cha:311}
@@ -19,11 +25,11 @@ In the real world, such a trivial step raises a first critical issue: not all th
 
 \subsection{Solutions}
 \label{cha:312}
-A non technical complexity solution would be contacting the databases administrators and discuss dump releases for Wikidata, however requires a lot of manual work becoming hard to scale up.
+A non-technical solution would be to contact the database administrators and discuss dump releases for Wikidata. This task is out of scope for our work.
 
-On the contrary, building autonomously the dump would scale up much better. Given a valid URI for each entity, we can re-create the dump. However, this is not trivial to generalize: sometimes it is impossible to retrieve the list of entities, sometimes the URIs are merely HTML pages that require Web scraping. For instance \texttt{Welsh Rugby Union men's player ID (P3826)}\footnote{\url{https://www.wikidata.org/wiki/Property:P3826}}, \texttt{Berlinische Galerie artist ID (P4580)}\footnote{\url{https://www.wikidata.org/wiki/Property:P4580}}, \texttt{FAI ID (P4556)}\footnote{\url{https://www.wikidata.org/wiki/Property:P4556}}, at the time of writing, need scraping for both the list of entities and each entity; \texttt{Debrett's People of Today ID (P2255)}\footnote{\url{https://www.wikidata.org/wiki/Property:P2255}}, \texttt{AGORHA event identifier (P2345)}\footnote{\url{https://www.wikidata.org/wiki/Property:P2345}}, at time of writing, do not seem to expose any list of people.
+On the other hand, autonomously building the dump would scale up much better. Given a valid URI for each entity, we can re-create the dump. However, this is not trivial to generalize: sometimes it is impossible to retrieve the list of entities, sometimes the URIs are merely HTML pages that require Web scraping. For instance, at the time of writing this thesis, \texttt{Welsh Rugby Union men's player ID (P3826)},\footnote{\url{https://www.wikidata.org/wiki/Property:P3826}} \texttt{Berlinische Galerie artist ID (P4580)},\footnote{\url{https://www.wikidata.org/wiki/Property:P4580}} \texttt{FAI ID (P4556)},\footnote{\url{https://www.wikidata.org/wiki/Property:P4556}} need scraping for both the list of entities and each entity; \texttt{Debrett's People of Today ID (P2255)},\footnote{\url{https://www.wikidata.org/wiki/Property:P2255}} \texttt{AGORHA event identifier (P2345)},\footnote{\url{https://www.wikidata.org/wiki/Property:P2345}} do not seem to expose any list of people.
 
-\section{Mapping to Wikidata}
+\section{Handling the format}
 \label{cha:32}
 The long tail is roughly broken down as follows:
 \begin{itemize}
@@ -35,22 +41,22 @@ The long tail is roughly broken down as follows:
 
 \subsection{Problem}
 \label{cha:321}
-Formats are heterogeneous. We focus on open data and RDF, as dealing with custom APIs is out of scope for this investigation. We also hope that the open data trend of recent years would help us. However, a manual scan of the small fishes yielded poor results. There were 56 targets in our long tail, out of \textbf{16} randomly picked candidates, only \texttt{YCBA agent ID}\footnote{\url{https://www.wikidata.org/wiki/Property:P4169}} was in RDF, and has thousands of uses in statements at the time of writing this report.
+Formats are heterogeneous. We focus on open data and RDF, as dealing with custom APIs is out of scope for this investigation. We also hope that the open data trend of recent years would help us. However, a manual scan of the small fishes yielded poor results. There were 56 targets in our long tail, out of 16 randomly picked candidates, only \texttt{YCBA agent ID}\footnote{\url{https://www.wikidata.org/wiki/Property:P4169}} was in RDF, and has thousands of uses in statements at the time of writing this thesis.
 \subsection{Solution}
 \label{cha:322}
 To define a way (by scripting for instance) to translate each input format into a standard project-wide one. This could be achieved during the next step, namely ontology mapping between a given small fish and Wikidata.
 
-\section{Handling the format}
+\section{Mapping to Wikidata}
 \label{cha:33}
-Linking Wikidata items to target entities requires a mapping between both meta-data/schemas.
+Linking Wikidata items to target entities requires a mapping between both schemas.
 
 \subsection{Solution}
 \label{cha:331}
 The mapping can be manually defined by the community: a piece of software will then apply it. To implement this step, we also need the common data format described above.
 
-\subsection{Side note: available entity meta-data}
+\subsection{Side note: available entity metadata}
 \label{cha:332}
-Small fishes may contain entity meta-data which are likely to be useful for automatic matching. The entity linking process may dramatically improve if the system is able to mine extra property mappings. This is obvious when meta-data are in different languages, but in general we cannot be sure that two different databases hold the same set of properties, if they have some in common.
+Small fishes may contain entity metadata which are likely to be useful for automatic matching. The entity linking process may dramatically improve if the system is able to mine extra property mappings. This is obvious when metadata are in different languages, but in general we cannot be sure that two different databases hold the same set of properties, if they have some in common.
 
 \section{Conclusion}
 \label{cha:34}
@@ -61,5 +67,5 @@ It is out of scope for the project to perform entity linking over the whole set 
 \item it is likely that the team is not facing eventual extra problems in this phase.
 \end{itemize}
 
-Most importantly, a system to plug new small fishes \textbf{already exists}. \textbf{Mix'n'match}\footnote{\url{https://tools.wmflabs.org/mix-n-match/}} is specifically designed for the task.\footnote{\url{http://magnusmanske.de/wordpress/?p=471}}. Instead of reinventing the wheel, we joined efforts with our advisor \texttt{Magnus Manske}\footnote{\url{https://meta.wikimedia.org/wiki/User:Magnus_Manske}} in his work on big fishes\footnote{\url{http://magnusmanske.de/wordpress/?p=478}}
+Most importantly, a system to plug new small fishes already exists: \texttt{Mix'n'match},\footnote{\url{https://tools.wmflabs.org/mix-n-match/}} which is specifically designed for the task.\footnote{\url{http://magnusmanske.de/wordpress/?p=471}}
 

@@ -1,4 +1,30 @@
-\chapter{Conclusions and future work}
+\chapter{Conclusion}
 \label{cha:conclusioni}
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed nunc orci. Aliquam nec nisl vitae sapien pulvinar dictum quis non urna. Suspendisse at dui a erat aliquam vestibulum. Quisque ultrices pellentesque pellentesque. Pellentesque egestas quam sed blandit tempus. Sed congue nec risus posuere euismod. Maecenas ut lacus id mauris sagittis egestas a eu dui. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Pellentesque at ultrices tellus. Ut eu purus eget sem iaculis ultricies sed non lorem. Curabitur gravida dui eget ex vestibulum venenatis. Phasellus gravida tellus velit, non eleifend justo lobortis eget. 
+\texttt{Wikidata} is a general-purpose structured knowledge base housed by the Wikimedia Foundation.\footnote{\url{https://wikimediafoundation.org/}}
+Its community is becoming more and more active in data curation: in the last year, the number of edits increased by 75.26\%, compared to the previous year.\footnote{\url{https://stats.wikimedia.org/v2/\#/wikidata.org/contributing/edits/normal|bar|1-Year|~total}} Despite such increased effort, Wikidata still suffers from a lack of references that support the trustworthiness of its content: currently, only less than \textbf{a quarter} of it has a reference to \textbf{non-wiki} sources and roughly a \textbf{half} is totally \textbf{unreferenced}.\footnote{\url{https://docs.google.com/presentation/d/1XX-yzT98fglAfFkHoixOI1XC1uwrS6f0u1xjdZT9TYI/edit?usp=sharing}, slides 15 to 19}
 
+In this thesis, we described the first development iteration of \texttt{soweego}, an automatic linking system for large catalogs that aims at filling the reference gap.
+Specifically, we illustrated the  \texttt{Wikidata} - \texttt{MusicBrainz} use case.
+Our contribution boils down to a set of core building blocks, the most prominent being the \textit{linker}, plus the \textit{ingestor}, \textit{validator}, and \textit{importer} components, which lay the foundation for the final product.
+Despite the project is only 3 months old, with a planned duration of 1 year, we managed to add \textbf{several hundreds of high-quality matches}\footnote{\url{https://www.wikidata.org/wiki/Special:Contributions/Soweego_bot}} to \texttt{Wikidata}.
+
+In the \textit{linker} module, we explored rule-based matching strategies, which serve as a baseline system for construction and comparison  of future machine learning-based strategies.
+Furthermore, we acquired insights on the actual data quality of \texttt{Wikidata} and earned expertise on the key features for improvement of the linking process.
+As described in Section \ref{cha:5}, links are a very precise feature to rely upon. Although dates perform well, they are not a valid standalone feature: on the other hand, they have a positive impact on the precision if they are combined to other ones.
+Finally, full name matching is a risky feature, as expected, creating a lot of false positives.
+
+The very next steps will focus on the improvement of existing strategies.
+First, the \textit{cross-database URL} strategy introduced in Section \ref{cha:423} will consume \textit{official homepages} of \texttt{Wikidata} entities, as well as the \textit{ISNI code} of the \texttt{MusicBrainz} ones. Moreover, we will investigate how tokenization in \textit{normalized names} strategy (cf. Section \ref{cha:424}) can be better exploited.
+
+Future work will include deeper research in the record linkage literature to improve the system, with a special attention on probabilistic approaches.
+Machine learning could be an interesting direction to take, as shown in \cite{DBLP:conf/semweb/NechaevCG17a}.
+The immediate goal is to obtain a confidence score for each computed match, expressed as probability.
+The baseline strategies could become our features in a machine learning-based solution.
+Moreover, inspired by \cite{DBLP:conf/semweb/NechaevCG17a}, we plan to use the full names strategies to select a subset of entities as input for the linking phase.
+In this way, our system would perform faster, thanks to the lower number of entities to check. This is possible just because we verified that full names matches tend to be a super set of the other strategies matches.
+
+\clearpage
+\newpage
+\mbox{~}
+\clearpage
+\newpage

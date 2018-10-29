@@ -24,10 +24,9 @@
 % Pacchetti aggiunti
 \usepackage[hyphens]{url}
 \usepackage[breaklinks, colorlinks=true, citecolor=red, linkcolor=black, urlcolor=black]{hyperref}
-\usepackage{listings}
-\usepackage{todonotes}
 \usepackage{graphicx}
 \usepackage[font=small,labelfont=bf]{caption}
+\usepackage{subfig}
 
 %%%%%%%%%%%%%%
 % supporto lettere accentate
@@ -38,7 +37,7 @@
 
 \singlespacing
 
-\usepackage[english]{babel}
+\usepackage[russian, english]{babel}
 
 \begin{document}
 
@@ -106,7 +105,7 @@
       \titlespacing*{\subsection}{0pt}{0.10in}{0.02in}
       
       % sommario
-      \input{abstract}
+      \input{summary.tex}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Nota
@@ -128,8 +127,7 @@
       %
       % \input oppure \include
       %
-      \input{0_introduction.tex}
-      \input{1_problemdefinition.tex}
+      \input{1_introduction.tex}
       \input{2_relatedwork.tex}
       \input{3_preliminar.tex}
       \input{4_architecture.tex}
@@ -177,10 +175,10 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     
 
-    \titleformat{\chapter}
-        {\normalfont\Huge\bfseries}{Allegato \thechapter}{1em}{}
+    %\titleformat{\chapter}
+    %    {\normalfont\Huge\bfseries}{Allegato \thechapter}{1em}{}
     % sezione Allegati - opzionale
-    \appendix
-    \input{allegati}
+    %\appendix
+    %\input{allegati}
 
 \end{document}
